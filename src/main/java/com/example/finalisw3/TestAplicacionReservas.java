@@ -16,5 +16,5 @@ public class TestAplicacionReservas {
         aplicacionReservas.hacerReserva("2023-12-01", "18:00", 4);
         assertEquals(1, aplicacionReservas.listarReservas().size());
     }
-
+    // TODO: arreglar el environment de junit
 }
