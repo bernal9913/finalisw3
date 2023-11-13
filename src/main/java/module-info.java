@@ -1,7 +1,7 @@
 module com.example.finalisw3 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires org.junit.jupiter.api;
+    requires org.testng;
 
 
     opens com.example.finalisw3 to javafx.fxml;

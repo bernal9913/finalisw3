@@ -1,12 +1,13 @@
 package com.example.finalisw3;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-public class TestAplicacionReservas {
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
+
+public class testngg {
     private AplicacionReservas aplicacionReservas;
 
-    @BeforeEach
+    @BeforeClass
     public void setUp() {
         aplicacionReservas = new AplicacionReservas();
     }
@@ -14,7 +15,8 @@ public class TestAplicacionReservas {
     @Test
     public void hacerReservaAgregaReserva() {
         aplicacionReservas.hacerReserva("2023-12-01", "18:00", 4);
-        assertEquals(1, aplicacionReservas.listarReservas().size());
+        assertEquals(aplicacionReservas.listarReservas().size(), 1);
     }
-    // TODO: arreglar el environment de junit
+
+
 }
