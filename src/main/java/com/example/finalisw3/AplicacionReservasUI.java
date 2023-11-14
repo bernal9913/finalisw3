@@ -1,14 +1,21 @@
 package com.example.finalisw3;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AplicacionReservasUI extends Application {
     private AplicacionReservas aplicacionReservas;
     private ListView<Reserva> reservasListView;
+    private TextField nuevaFechaField;
+    private TextField nuevaHoraField;
+    private TextField nuevosComensalesField;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -19,7 +26,9 @@ public class AplicacionReservasUI extends Application {
         aplicacionReservas = new AplicacionReservas();
 
         primaryStage.setTitle("Aplicación de Reservas");
-
+        /*
+        * Elementos generales de interfaz
+        * */
         Label fechaLabel = new Label("Fecha:");
         TextField fechaField = new TextField();
         Label horaLabel = new Label("Hora:");
@@ -29,9 +38,22 @@ public class AplicacionReservasUI extends Application {
 
         Button hacerReservaButton = new Button("Hacer Reserva");
         Button cancelarReservaButton = new Button("Cancelar Reserva");
+        Button modificarReservaButton = new Button("Modificar reserva");
         TextArea reservasTextArea = new TextArea();
 
+        /*
+        * Parte de codigo para modificar la reservación
+        * */
+        nuevaFechaField = new TextField();
+        nuevaHoraField = new TextField();
+        nuevosComensalesField = new TextField();
+
         reservasListView = new ListView<>();
+        reservasListView.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) { // Doble clic
+                mostrarVentanaModificarReserva(reservasListView.getSelectionModel().getSelectedItem());
+            }
+        });
 
         hacerReservaButton.setOnAction(e -> {
             String fecha = fechaField.getText();
@@ -48,7 +70,12 @@ public class AplicacionReservasUI extends Application {
                 actualizarReservasListView(reservasListView);
             }
         });
-
+        modificarReservaButton.setOnAction(event -> {
+            Reserva reservaSeleccionada = reservasListView.getSelectionModel().getSelectedItem();
+            if (reservaSeleccionada != null) {
+                mostrarVentanaModificarReserva(reservaSeleccionada);
+            }
+        });
         // https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(fechaLabel, fechaField, horaLabel,
@@ -60,9 +87,48 @@ public class AplicacionReservasUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
     private void actualizarReservasListView(ListView<Reserva> reservasListView) {
         reservasListView.getItems().clear();
         reservasListView.getItems().addAll(aplicacionReservas.listarReservas());
+    }
+
+    private void mostrarVentanaModificarReserva(Reserva reserva) {
+        Stage ventanaModificarReserva = new Stage();
+        ventanaModificarReserva.initModality(Modality.APPLICATION_MODAL);
+        ventanaModificarReserva.setTitle("Modificar Reserva");
+
+        VBox vbox = new VBox(10);
+        vbox.getChildren().addAll(new Label("Nueva Fecha:"), new TextField(reserva.getFecha()),
+                new Label("Nueva Hora:"), new TextField(reserva.getHora()),
+                new Label("Nuevos Comensales:"), new TextField(String.valueOf(reserva.getComensales())));
+
+        /*
+        * new Button("Guardar Cambios", new EventHandler<ActionEvent>() {
+        *   @Override
+        *   public void handle(ActionEvent event) {
+        *       modificarReserva(reserva, ((TextField) vbox.getChildren().get(1)).getText(),
+        *           ((TextField) vbox.getChildren().get(3)).getText(),
+        *           Integer.parseInt(((TextField) vbox.getChildren().get(5)).getText()));
+        *       ventanaModificarReserva.close();
+                }
+            });
+        * */
+        Button guardarCambiosButton = new Button("Guardar Cambios");
+        guardarCambiosButton.setOnAction(event -> {
+            modificarReserva(reserva, ((TextField) vbox.getChildren().get(1)).getText(),
+                    ((TextField) vbox.getChildren().get(3)).getText(),
+                    Integer.parseInt(((TextField) vbox.getChildren().get(5)).getText()));
+            ventanaModificarReserva.close();
+        });
+
+        vbox.getChildren().add(guardarCambiosButton);
+
+        Scene scene = new Scene(vbox, 500, 500);
+        ventanaModificarReserva.setScene(scene);
+        ventanaModificarReserva.showAndWait();
+    }
+    private void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales) {
+        aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales);
+        actualizarReservasListView(reservasListView);
     }
 }

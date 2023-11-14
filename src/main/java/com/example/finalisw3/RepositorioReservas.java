@@ -21,4 +21,17 @@ public class RepositorioReservas {
     public List<Reserva> listarReservas() {
         return reservas;
     }
+
+    public void modificarReserva(Reserva reservaAntigua, Reserva reservaNueva) {
+        if (reservas.contains(reservaAntigua)){
+            System.out.println("Reserva anterior: " + reservaAntigua.getFecha()
+                    + reservaAntigua.getHora()
+                    + reservaAntigua.getComensales());
+            reservas.remove(reservaAntigua);
+            reservas.add(reservaNueva);
+            System.out.println("Reserva nueva agregada con exito");
+        }else {
+            System.out.println("Ha ocurrido un error agregando la reserva");
+        }
+    }
 }
