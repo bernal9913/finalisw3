@@ -1,5 +1,6 @@
-package com.example.finalisw3;
+package tests;
 
+import com.example.finalisw3.AplicacionReservas;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
