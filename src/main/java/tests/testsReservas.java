@@ -11,7 +11,9 @@ import java.util.List;
 import static org.testng.Assert.*;
 
 public class testsReservas {
-    Reserva reserva = new Reserva("01-12-2023", "18:00", 3);
+    Reserva reserva = new Reserva("01-12-2023", "18:00", 3, "Emilio Garra");
+
+
     @BeforeClass
     public void preparar(){
 
@@ -20,7 +22,7 @@ public class testsReservas {
     public void hacerReservaTest(){
         AplicacionReservas aplicacionReservas = new AplicacionReservas();
         aplicacionReservas.hacerReserva(
-                reserva.getFecha(), reserva.getHora(), reserva.getComensales());
+                reserva.getFecha(), reserva.getHora(), reserva.getComensales(), reserva.getNombreTitular());
 
         // checar si la reservacion se creo
         List<Reserva> reservas = aplicacionReservas.listarReservas();
@@ -31,6 +33,7 @@ public class testsReservas {
         Assert.assertEquals(reserva.getFecha(), "01-12-2023");
         Assert.assertEquals(reserva.getHora(), "18:00");
         Assert.assertEquals(reserva.getComensales(), 3);
+        Assert.assertEquals(reserva.getNombreTitular(), "Emilio Garra");
     }
 
     @Test
@@ -39,7 +42,8 @@ public class testsReservas {
         aplicacionReservas.hacerReserva(
                 reserva.getFecha(),
                 reserva.getHora(),
-                reserva.getComensales());
+                reserva.getComensales(),
+                reserva.getNombreTitular());
 
         aplicacionReservas.cancelarReserva(reserva);
         RepositorioReservas repositorioReservas = new RepositorioReservas();
@@ -60,7 +64,8 @@ public class testsReservas {
         Reserva reservaViejita = new Reserva(
                 "22-22-2222",
                 "22:22",
-                2);
+                2,
+                "Emilio Loreto");
         repositorioReservas.agregarReserva(
                 reservaViejita);
 
