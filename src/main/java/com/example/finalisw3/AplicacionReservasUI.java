@@ -19,6 +19,8 @@ public class AplicacionReservasUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        RepositorioReservas repositorio = new RepositorioReservas();
+        //ConsolaParaReservar.ejecutar(repositorio);
     }
 
     @Override
@@ -35,6 +37,8 @@ public class AplicacionReservasUI extends Application {
         TextField horaField = new TextField();
         Label comensalesLabel = new Label("Comensales:");
         TextField comensalesField = new TextField();
+        Label nombreLabel = new Label("Nombre del titular:");
+        TextField nombreField = new TextField();
 
         Button hacerReservaButton = new Button("Hacer Reserva");
         Button cancelarReservaButton = new Button("Cancelar Reserva");
@@ -59,7 +63,8 @@ public class AplicacionReservasUI extends Application {
             String fecha = fechaField.getText();
             String hora = horaField.getText();
             int comensales = Integer.parseInt(comensalesField.getText());
-            aplicacionReservas.hacerReserva(fecha, hora, comensales);
+            String nombre = nombreField.getText();
+            aplicacionReservas.hacerReserva(fecha, hora, comensales, nombre);
             actualizarReservasListView(reservasListView);
         });
 
@@ -78,8 +83,11 @@ public class AplicacionReservasUI extends Application {
         });
         // https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html
         VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(fechaLabel, fechaField, horaLabel,
-                horaField, comensalesLabel, comensalesField,
+        vbox.getChildren().addAll(
+                fechaLabel, fechaField,
+                horaLabel, horaField,
+                comensalesLabel, comensalesField,
+                nombreLabel, nombreField,
                 hacerReservaButton, cancelarReservaButton, reservasListView);
 
 

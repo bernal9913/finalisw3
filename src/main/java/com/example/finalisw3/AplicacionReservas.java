@@ -9,8 +9,8 @@ public class AplicacionReservas {
         this.repositorio = new RepositorioReservas();
     }
 
-    public void hacerReserva(String fecha, String hora, int comensales) {
-        Reserva reserva = new Reserva(fecha, hora, comensales);
+    public void hacerReserva(String fecha, String hora, int comensales, String nombre) {
+        Reserva reserva = new Reserva(fecha, hora, comensales, nombre);
         repositorio.agregarReserva(reserva);
     }
 
@@ -23,7 +23,7 @@ public class AplicacionReservas {
     }
 
     public void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales) {
-        Reserva reservaNueva = new Reserva(nuevaFecha,nuevaHora,nuevosComensales);
+        Reserva reservaNueva = new Reserva(nuevaFecha,nuevaHora,nuevosComensales, "Emilio loreto ");
         repositorio.modificarReserva(reservaAntigua, reservaNueva);
 
     }
