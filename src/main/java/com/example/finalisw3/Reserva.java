@@ -4,11 +4,13 @@ public class Reserva {
     private String fecha;
     private String hora;
     private int comensales;
+    private String nombreTitular;
 
-    public Reserva(String fecha, String hora, int comensales) {
+    public Reserva(String fecha, String hora, int comensales, String nombreTitular) {
         this.fecha = fecha;
         this.hora = hora;
         this.comensales = comensales;
+        this.nombreTitular = nombreTitular;
     }
 
     public String getFecha() {
@@ -21,6 +23,9 @@ public class Reserva {
 
     public int getComensales() {
         return comensales;
+    }
+    public String getNombreTitular(){
+        return nombreTitular;
     }
 
     @Override
