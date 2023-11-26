@@ -22,8 +22,8 @@ public class AplicacionReservas {
         return repositorio.listarReservas();
     }
 
-    public void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales) {
-        Reserva reservaNueva = new Reserva(nuevaFecha,nuevaHora,nuevosComensales, "Emilio loreto ");
+    public void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales, String nuevoTitular) {
+        Reserva reservaNueva = new Reserva(nuevaFecha,nuevaHora,nuevosComensales, nuevoTitular);
         repositorio.modificarReserva(reservaAntigua, reservaNueva);
 
     }

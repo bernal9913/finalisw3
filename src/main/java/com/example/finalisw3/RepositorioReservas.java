@@ -10,8 +10,7 @@ public class RepositorioReservas {
 
     public RepositorioReservas(/* String archivoCSV */) {
         this.reservas = new ArrayList<>();
-        //this.archivoCSV = archivoCSV;
-        //cargarReservas();
+
     }
 
     public void agregarReserva(Reserva reserva) {
@@ -40,7 +39,7 @@ public class RepositorioReservas {
     }
     /**
      * Este fragmento de cargar reservas es una duda enorme si jala
-     * pero fue agregado por si a lo mejor se necesitaba guardar en csv
+     * pero, fue agregado por si a lo mejor se necesitaba guardar en csv
      * usar bajo su propio riesgo
      *
      * **/

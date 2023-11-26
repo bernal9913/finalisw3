@@ -9,6 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class AplicacionReservasUI extends Application {
     private AplicacionReservas aplicacionReservas;
     private ListView<Reserva> reservasListView;
@@ -31,9 +34,9 @@ public class AplicacionReservasUI extends Application {
         /*
         * Elementos generales de interfaz
         * */
-        Label fechaLabel = new Label("Fecha:");
+        Label fechaLabel = new Label("Fecha: (YYYY-MM-DD)");
         TextField fechaField = new TextField();
-        Label horaLabel = new Label("Hora:");
+        Label horaLabel = new Label("Hora: (HH:mm)");
         TextField horaField = new TextField();
         Label comensalesLabel = new Label("Comensales:");
         TextField comensalesField = new TextField();
@@ -45,6 +48,41 @@ public class AplicacionReservasUI extends Application {
         Button modificarReservaButton = new Button("Modificar reserva");
         TextArea reservasTextArea = new TextArea();
 
+        // regex chatgepetiadas porque no nos salen
+        String fechaRegex = "\\d{4}-\\d{2}-\\d{2}";
+        String horaRegex = "\\d{2}:\\d{2}";
+        String comensalesRegex= "\\d+";
+        // patrones para las regex
+        Pattern fechaPattern = Pattern.compile(fechaRegex);
+        Pattern horaPattern = Pattern.compile(horaRegex);
+        Pattern comensalesPattern = Pattern.compile(comensalesRegex);
+
+        // Eventos de cambio para los campos de fecha y hora
+        fechaField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Matcher matcher = fechaPattern.matcher(newValue);
+            if (!matcher.matches()) {
+                fechaField.setStyle("-fx-border-color: red;");
+            } else {
+                fechaField.setStyle(""); // Restaurar el estilo por defecto
+            }
+        });
+
+        horaField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Matcher matcher = horaPattern.matcher(newValue);
+            if (!matcher.matches()) {
+                horaField.setStyle("-fx-border-color: red;");
+            } else {
+                horaField.setStyle(""); // Restaurar el estilo por defecto
+            }
+        });
+        comensalesField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Matcher matcher = comensalesPattern.matcher(newValue);
+            if (!matcher.matches()) {
+                comensalesField.setStyle("-fx-border-color: red;");
+            } else {
+                comensalesField.setStyle(""); // Restaurar el estilo por defecto
+            }
+        });
         /*
         * Parte de codigo para modificar la reservación
         * */
@@ -108,7 +146,8 @@ public class AplicacionReservasUI extends Application {
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(new Label("Nueva Fecha:"), new TextField(reserva.getFecha()),
                 new Label("Nueva Hora:"), new TextField(reserva.getHora()),
-                new Label("Nuevos Comensales:"), new TextField(String.valueOf(reserva.getComensales())));
+                new Label("Nuevos Comensales:"), new TextField(String.valueOf(reserva.getComensales())),
+                new Label("Nuevo titular:"), new TextField(reserva.getNombreTitular()));
 
         /*
         * new Button("Guardar Cambios", new EventHandler<ActionEvent>() {
@@ -125,7 +164,8 @@ public class AplicacionReservasUI extends Application {
         guardarCambiosButton.setOnAction(event -> {
             modificarReserva(reserva, ((TextField) vbox.getChildren().get(1)).getText(),
                     ((TextField) vbox.getChildren().get(3)).getText(),
-                    Integer.parseInt(((TextField) vbox.getChildren().get(5)).getText()));
+                    Integer.parseInt(((TextField) vbox.getChildren().get(5)).getText()),
+                    ((TextField) vbox.getChildren().get(7)).getText());
             ventanaModificarReserva.close();
         });
 
@@ -135,8 +175,13 @@ public class AplicacionReservasUI extends Application {
         ventanaModificarReserva.setScene(scene);
         ventanaModificarReserva.showAndWait();
     }
-    private void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales) {
-        aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales);
+    private void modificarReserva(Reserva reservaAntigua,
+                                  String nuevaFecha,
+                                  String nuevaHora,
+                                  int nuevosComensales,
+                                  String nuevoTitular) {
+
+        aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales, nuevoTitular);
         actualizarReservasListView(reservasListView);
     }
 }
