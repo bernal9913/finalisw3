@@ -100,10 +100,21 @@ public class AplicacionReservasUI extends Application {
         hacerReservaButton.setOnAction(e -> {
             String fecha = fechaField.getText();
             String hora = horaField.getText();
-            int comensales = Integer.parseInt(comensalesField.getText());
+            String comensalesStr = comensalesField.getText();
             String nombre = nombreField.getText();
-            aplicacionReservas.hacerReserva(fecha, hora, comensales, nombre);
-            actualizarReservasListView(reservasListView);
+
+            Matcher matcherFecha = fechaPattern.matcher(fecha);
+            Matcher matcherHora = horaPattern.matcher(hora);
+            Matcher matcherComensales = comensalesPattern.matcher(comensalesStr);
+
+            if (matcherFecha.matches() && matcherHora.matches() && matcherComensales.matches()) {
+                int comensales = Integer.parseInt(comensalesStr);
+                aplicacionReservas.hacerReserva(fecha, hora, comensales, nombre);
+                actualizarReservasListView(reservasListView);
+            } else {
+                // Aquí puedes mostrar un mensaje de error o actualizar la UI para reflejar que la entrada es inválida.
+                showAlert("Error", "Por favor, ingresa la información en el formato correcto.");
+            }
         });
 
         cancelarReservaButton.setOnAction(e -> {
@@ -183,5 +194,12 @@ public class AplicacionReservasUI extends Application {
 
         aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales, nuevoTitular);
         actualizarReservasListView(reservasListView);
+    }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 }
