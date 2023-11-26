@@ -9,6 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class AplicacionReservasUI extends Application {
     private AplicacionReservas aplicacionReservas;
     private ListView<Reserva> reservasListView;
@@ -31,9 +34,9 @@ public class AplicacionReservasUI extends Application {
         /*
         * Elementos generales de interfaz
         * */
-        Label fechaLabel = new Label("Fecha:");
+        Label fechaLabel = new Label("Fecha: (YYYY-MM-DD)");
         TextField fechaField = new TextField();
-        Label horaLabel = new Label("Hora:");
+        Label horaLabel = new Label("Hora: (HH:mm)");
         TextField horaField = new TextField();
         Label comensalesLabel = new Label("Comensales:");
         TextField comensalesField = new TextField();
@@ -45,6 +48,41 @@ public class AplicacionReservasUI extends Application {
         Button modificarReservaButton = new Button("Modificar reserva");
         TextArea reservasTextArea = new TextArea();
 
+        // regex chatgepetiadas porque no nos salen
+        String fechaRegex = "\\d{4}-\\d{2}-\\d{2}";
+        String horaRegex = "\\d{2}:\\d{2}";
+        String comensalesRegex= "\\d+";
+        // patrones para las regex
+        Pattern fechaPattern = Pattern.compile(fechaRegex);
+        Pattern horaPattern = Pattern.compile(horaRegex);
+        Pattern comensalesPattern = Pattern.compile(comensalesRegex);
+
+        // Eventos de cambio para los campos de fecha y hora
+        fechaField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Matcher matcher = fechaPattern.matcher(newValue);
+            if (!matcher.matches()) {
+                fechaField.setStyle("-fx-border-color: red;");
+            } else {
+                fechaField.setStyle(""); // Restaurar el estilo por defecto
+            }
+        });
+
+        horaField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Matcher matcher = horaPattern.matcher(newValue);
+            if (!matcher.matches()) {
+                horaField.setStyle("-fx-border-color: red;");
+            } else {
+                horaField.setStyle(""); // Restaurar el estilo por defecto
+            }
+        });
+        comensalesField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Matcher matcher = comensalesPattern.matcher(newValue);
+            if (!matcher.matches()) {
+                comensalesField.setStyle("-fx-border-color: red;");
+            } else {
+                comensalesField.setStyle(""); // Restaurar el estilo por defecto
+            }
+        });
         /*
         * Parte de codigo para modificar la reservación
         * */
