@@ -16,7 +16,7 @@ La "Aplicación de Reservas" es un sistema simple para gestionar reservas en un 
 * Java
 * JavaFX (para la interfaz de usuario)
 * JUnit (para pruebas unitarias)
-* Cucumber (para pruebas de aceptación BDD)
+
 
 ## Configuración del Proyecto
 
@@ -42,3 +42,11 @@ La "Aplicación de Reservas" es un sistema simple para gestionar reservas en un 
 
 ## Pruebas
    * Pruebas Unitarias: Utiliza TestNG (una variante de JUnit) para probar las unidades individuales del código.
+
+## Definicion de las clases
+   * Reserva:  clase del objeto reserva
+   * AplicacionReservas: punto intermedio para el patron factory
+   * AplicacionReservasUI: interfaz de usuario con javafx para la interfaz de usuario 
+   * RepositorioReservas: clase para el patron repository
+   * GestorReserva: clase con patron factory para hacer funcionar la consola 
+   * ConsolaParaReservar: clase para hacer funcionar la aplicacion mediante el uso de la consola
