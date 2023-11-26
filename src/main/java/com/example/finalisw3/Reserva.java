@@ -30,6 +30,6 @@ public class Reserva {
 
     @Override
     public String toString() {
-        return "Fecha: " + fecha + ", Hora: " + hora + ", Comensales: " + comensales;
+        return "Titular: "+ nombreTitular+ ", Fecha: " + fecha + ", Hora: " + hora + ", Comensales: " + comensales;
     }
 }
