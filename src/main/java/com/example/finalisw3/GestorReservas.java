@@ -17,4 +17,19 @@ public class GestorReservas {
     public List<Reserva> listarReserva(){
         return repositorio.listarReservas();
     }
+
+    public void modificarReserva(Reserva reserva, String nuevaFecha, String nuevaHora, int nuevaCantidad) {
+        if (nuevaFecha != null && !nuevaFecha.isEmpty()) {
+            reserva.setFecha(nuevaFecha);
+        }
+
+        if (nuevaHora != null && !nuevaHora.isEmpty()) {
+            reserva.setHora(nuevaHora);
+        }
+
+        if (nuevaCantidad > 0) {
+            reserva.setComensales(nuevaCantidad);
+        }
+    }
+
 }

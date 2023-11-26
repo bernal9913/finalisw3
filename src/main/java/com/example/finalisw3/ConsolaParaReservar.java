@@ -17,8 +17,9 @@ public class ConsolaParaReservar {
             System.out.println("Seleccione una opción: ");
             System.out.println("1. Hacer reserva");
             System.out.println("2. Cancelar reserva");
-            System.out.println("3. Listar reservas");
-            System.out.println("4. Salir");
+            System.out.println("3. Modificar reservas");
+            System.out.println("4. Listar reservas");
+            System.out.println("5. Salir");
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -34,6 +35,8 @@ public class ConsolaParaReservar {
                     listarReservas(gestorReservas);
                     break;
                 case 4:
+                    modificarReservas(gestorReservas);
+                case 5:
                     System.out.println("Saliendo...");
                     System.exit(0);
                 default:
@@ -78,5 +81,47 @@ public class ConsolaParaReservar {
             System.out.println(i+1 + ". Fecha: " + reserva.getFecha() + ", Hora: " + reserva.getHora() +
                     ", Comensales: " + reserva.getComensales() + ", Titular: " + reserva.getNombreTitular());
         }
+    }
+    private static void modificarReservas(GestorReservas gestorReservas){
+        System.out.print("Ingrese el índice de la reserva a modificar: ");
+        int indice = scanner.nextInt();
+        scanner.nextLine(); // Limpiar el buffer después de leer el número
+
+        List<Reserva> reservas = gestorReservas.listarReserva();
+        if (indice >= 0 && indice < reservas.size()) {
+            Reserva reservaSeleccionada = reservas.get(indice);
+
+            System.out.println("Reserva actual seleccionada:");
+            mostrarDetallesReserva(reservaSeleccionada);
+
+            System.out.print("Ingrese la nueva fecha (o Enter para mantener la actual): ");
+            String nuevaFecha = scanner.nextLine();
+            if (!nuevaFecha.isEmpty()) {
+                reservaSeleccionada.setFecha(nuevaFecha);
+            }
+
+            System.out.print("Ingrese la nueva hora (o Enter para mantener la actual): ");
+            String nuevaHora = scanner.nextLine();
+            if (!nuevaHora.isEmpty()) {
+                reservaSeleccionada.setHora(nuevaHora);
+            }
+
+            System.out.print("Ingrese la nueva cantidad de comensales (o Enter para mantener la actual): ");
+            String nuevaCantidad = scanner.nextLine();
+            if (!nuevaCantidad.isEmpty()) {
+                reservaSeleccionada.setComensales(Integer.parseInt(nuevaCantidad));
+            }
+
+            System.out.println("Reserva modificada con éxito.");
+            mostrarDetallesReserva(reservaSeleccionada);
+        } else {
+            System.out.println("Índice no válido.");
+        }
+    }
+    private static void mostrarDetallesReserva(Reserva reserva) {
+        System.out.println("Fecha: " + reserva.getFecha() +
+                ", Hora: " + reserva.getHora() +
+                ", Comensales: " + reserva.getComensales() +
+                ", Titular: " + reserva.getNombreTitular());
     }
 }

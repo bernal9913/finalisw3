@@ -28,8 +28,26 @@ public class Reserva {
         return nombreTitular;
     }
 
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setComensales(int comensales) {
+        this.comensales = comensales;
+    }
+
+    public void setNombreTitular(String nombreTitular) {
+        this.nombreTitular = nombreTitular;
+    }
+
     @Override
     public String toString() {
         return "Titular: "+ nombreTitular+ ", Fecha: " + fecha + ", Hora: " + hora + ", Comensales: " + comensales;
     }
+
+    
 }
