@@ -108,7 +108,8 @@ public class AplicacionReservasUI extends Application {
         VBox vbox = new VBox(10);
         vbox.getChildren().addAll(new Label("Nueva Fecha:"), new TextField(reserva.getFecha()),
                 new Label("Nueva Hora:"), new TextField(reserva.getHora()),
-                new Label("Nuevos Comensales:"), new TextField(String.valueOf(reserva.getComensales())));
+                new Label("Nuevos Comensales:"), new TextField(String.valueOf(reserva.getComensales())),
+                new Label("Nuevo titular:"), new TextField(reserva.getNombreTitular()));
 
         /*
         * new Button("Guardar Cambios", new EventHandler<ActionEvent>() {
@@ -125,7 +126,8 @@ public class AplicacionReservasUI extends Application {
         guardarCambiosButton.setOnAction(event -> {
             modificarReserva(reserva, ((TextField) vbox.getChildren().get(1)).getText(),
                     ((TextField) vbox.getChildren().get(3)).getText(),
-                    Integer.parseInt(((TextField) vbox.getChildren().get(5)).getText()));
+                    Integer.parseInt(((TextField) vbox.getChildren().get(5)).getText()),
+                    ((TextField) vbox.getChildren().get(7)).getText());
             ventanaModificarReserva.close();
         });
 
@@ -135,8 +137,8 @@ public class AplicacionReservasUI extends Application {
         ventanaModificarReserva.setScene(scene);
         ventanaModificarReserva.showAndWait();
     }
-    private void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales) {
-        aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales);
+    private void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales, String nuevoTitular) {
+        aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales, nuevoTitular);
         actualizarReservasListView(reservasListView);
     }
 }
