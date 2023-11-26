@@ -137,7 +137,12 @@ public class AplicacionReservasUI extends Application {
         ventanaModificarReserva.setScene(scene);
         ventanaModificarReserva.showAndWait();
     }
-    private void modificarReserva(Reserva reservaAntigua, String nuevaFecha, String nuevaHora, int nuevosComensales, String nuevoTitular) {
+    private void modificarReserva(Reserva reservaAntigua,
+                                  String nuevaFecha,
+                                  String nuevaHora,
+                                  int nuevosComensales,
+                                  String nuevoTitular) {
+
         aplicacionReservas.modificarReserva(reservaAntigua, nuevaFecha, nuevaHora, nuevosComensales, nuevoTitular);
         actualizarReservasListView(reservasListView);
     }
