@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -55,7 +56,6 @@ public class testsReservas {
         Assert.assertTrue(reservas.isEmpty()); // anda bien contreras el assert
 
     }
-    // TODO: arreglar e investigar el porque no pasan los tests
     @Test
     public void modificarReservaTest(){
         AplicacionReservas aplicacionReservas = new AplicacionReservas();
@@ -69,16 +69,6 @@ public class testsReservas {
         repositorioReservas.agregarReserva(
                 reservaViejita);
 
-
-        //Reserva reservaNueva = new Reserva(reserva.getFecha(), reserva.getHora(), reserva.getComensales());
-/*
-        aplicacionReservas.modificarReserva(
-                reservaViejita,
-                fechaNueva,
-                horaNueva,
-                comensalesNueva);
-*/
-
         repositorioReservas.modificarReserva(reservaViejita, reserva);
 
         List<Reserva> reservas = repositorioReservas.listarReservas();
@@ -90,5 +80,31 @@ public class testsReservas {
         Assert.assertEquals(reservaMod.getFecha(), reserva.getFecha());
         Assert.assertEquals(reservaMod.getHora(), reserva.getHora());
         Assert.assertEquals(reservaMod.getComensales(), reserva.getComensales());
+        System.out.println(reservas);
+    }
+    @Test
+    public void listarReservas(){
+        AplicacionReservas aplicacionReservas = new AplicacionReservas();
+        aplicacionReservas.hacerReserva(reserva.getFecha(), reserva.getHora(), reserva.getComensales(), reserva.getNombreTitular());
+        aplicacionReservas.hacerReserva("2023-29-11", "20:30", 3, "Taylor Swift");
+        aplicacionReservas.hacerReserva("2023-29-11", "22:30", 1, "Frank Ocean");
+        aplicacionReservas.hacerReserva("2023-29-11", "19:23", 40, "La parvada");
+
+        List<Reserva> reservas = aplicacionReservas.listarReservas();
+        System.out.println(reservas);
+        Assert.assertEquals(reservas.size(), 4);
+        Reserva reservaLaParvada = null;
+
+        // Iterar sobre la lista de reservas
+        for (Reserva reserva : reservas) {
+            // Verificar si el titular es "La parvada"
+            if ("La parvada".equals(reserva.getNombreTitular())) {
+                reservaLaParvada = reserva;
+                break;
+            }
+        }
+
+        Assert.assertNotNull(reservaLaParvada, "No se encontró la reserva con el titular 'La Parvada'");
+        Assert.assertEquals(reservaLaParvada.getNombreTitular(), "La parvada", "El titular no es 'La Parvada'");
     }
 }
