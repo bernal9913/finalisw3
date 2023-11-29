@@ -32,13 +32,15 @@ public class ConsolaParaReservar {
                     cancelarReserva(gestorReservas);
                     break;
                 case 3:
-                    listarReservas(gestorReservas);
+                    modificarReservas(gestorReservas);
                     break;
                 case 4:
-                    modificarReservas(gestorReservas);
+                    listarReservas(gestorReservas);
+                    break;
                 case 5:
                     System.out.println("Saliendo...");
                     System.exit(0);
+                    break;
                 default:
                     System.out.println("Opción no valida");
             }
@@ -87,6 +89,7 @@ public class ConsolaParaReservar {
         int indice = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer después de leer el número
 
+        indice = indice - 1;
         List<Reserva> reservas = gestorReservas.listarReserva();
         if (indice >= 0 && indice < reservas.size()) {
             Reserva reservaSeleccionada = reservas.get(indice);
